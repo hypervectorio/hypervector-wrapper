@@ -8,3 +8,7 @@ def test_list_resources():
 
     assert len(projects) > 0
     assert isinstance(projects[0], hypervector.Project)
+
+    project = hypervector.Project.get(projects[0].project_uuid)
+
+    assert isinstance(project, hypervector.Project)
