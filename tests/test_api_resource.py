@@ -6,4 +6,5 @@ def test_list_resources():
 
     projects = hypervector.Project.list()
 
-    assert(len(projects) > 0)
+    assert len(projects) > 0
+    assert isinstance(projects[0], hypervector.Project)
