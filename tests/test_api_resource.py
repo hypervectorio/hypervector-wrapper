@@ -1,8 +1,8 @@
 import hypervector
 
 
-def test_list_resources():
-    hypervector.API_KEY = "PlfoV2peBisiCmAegiHsW-LxXnpYRcrXw0nGSko6s3iLEnc"
+def test_resources():
+    hypervector.API_KEY = "TeCkAoxAMWPzRmSV2mvjKc8K67kl_S7BgyrZZxMqQ_--yME"
 
     projects = hypervector.Project.list()
 
@@ -12,3 +12,8 @@ def test_list_resources():
     project = hypervector.Project.get(projects[0].project_uuid)
 
     assert isinstance(project, hypervector.Project)
+    assert isinstance(project.definitions[0], hypervector.Definition)
+    assert isinstance(project.definitions[0].ensembles[0], hypervector.Ensemble)
+
+
+
