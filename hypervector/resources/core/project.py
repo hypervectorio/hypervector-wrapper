@@ -1,3 +1,4 @@
+from hypervector.resources.core.definition import Definition
 from hypervector.resources.abstract.api_resource import APIResource
 
 
@@ -20,7 +21,17 @@ class Project(APIResource):
         return cls(project_uuid=dictionary['project_uuid'],
                    project_name=dictionary['project_name'],
                    added=dictionary['added'],
-                   definitions=dictionary['definitions'])
+                   definitions=_parse_definitions(dictionary['definitions']))
+
+
+def _parse_definitions(definitions):
+    parsed_definitions = []
+    for definition_uuid, definition_meta in definitions.items():
+        parsed_definition = Definition.from_dict(definition_uuid, definition_meta)
+        parsed_definitions.append(parsed_definition)
+    return parsed_definitions
+
+
 
 
 
