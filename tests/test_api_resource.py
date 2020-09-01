@@ -2,7 +2,7 @@ import hypervector
 
 
 def test_resources():
-    hypervector.API_KEY = "TeCkAoxAMWPzRmSV2mvjKc8K67kl_S7BgyrZZxMqQ_--yME"
+    hypervector.API_KEY = "qRokv-vMqeHy7vkgsLEOgJitIRBP-N9b-zo81UCcPrlkzMA"
 
     projects = hypervector.Project.list()
 

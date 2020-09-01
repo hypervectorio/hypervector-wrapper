@@ -1,5 +1,5 @@
 # Hypervector Python bindings
-# Author: Jason Costello <jason@hypervectpr.io>
+# Author: Jason Costello <jason@hypervector.io>
 
 API_KEY = None
 API_BASE = "http://localhost:5000"
