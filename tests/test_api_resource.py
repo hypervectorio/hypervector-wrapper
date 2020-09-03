@@ -2,8 +2,6 @@ import hypervector
 
 
 def test_resources():
-    hypervector.API_KEY = "qRokv-vMqeHy7vkgsLEOgJitIRBP-N9b-zo81UCcPrlkzMA"
-
     projects = hypervector.Project.list()
 
     assert len(projects) > 0
@@ -14,6 +12,12 @@ def test_resources():
     assert isinstance(project, hypervector.Project)
     assert isinstance(project.definitions[0], hypervector.Definition)
     assert isinstance(project.definitions[0].ensembles[0], hypervector.Ensemble)
+
+    new_project = hypervector.Project.new()
+
+    assert 1 == 1
+
+
 
 
 
