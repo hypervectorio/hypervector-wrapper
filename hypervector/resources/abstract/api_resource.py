@@ -11,18 +11,20 @@ class APIResource:
     headers = {'content-type': 'application/json'}
 
     @classmethod
-    def list(cls):
+    def get_headers(cls):
         cls.headers['x-api-key'] = get_api_key()
+        return cls.headers
+
+    @classmethod
+    def list(cls):
         endpoint = hypervector.API_BASE + "/" + cls.resource_name + "/list"
-        response = requests.get(endpoint, headers=cls.headers)
+        response = requests.get(endpoint, headers=cls.get_headers())
         return [cls.from_dict_for_lists(obj) for obj in response.json()]
 
     @classmethod
     def get(cls, uuid):
-        cls.headers['x-api-key'] = get_api_key()
         endpoint = hypervector.API_BASE + "/" + cls.resource_name
         data = {cls.resource_name + "_uuid": uuid}
-        response = requests.get(endpoint, json=data, headers=cls.headers).json()
-
+        response = requests.get(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_dict(response)
 
