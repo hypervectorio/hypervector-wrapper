@@ -1,4 +1,4 @@
-# Hypervector Python bindings
+# Hypervector Python wrapper
 # Author: Jason Costello <jason@hypervector.io>
 
 API_KEY = None
