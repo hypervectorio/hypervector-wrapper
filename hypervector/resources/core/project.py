@@ -1,3 +1,6 @@
+import requests
+
+import hypervector
 from hypervector.resources.core.definition import Definition
 from hypervector.resources.abstract.api_resource import APIResource
 
@@ -18,10 +21,21 @@ class Project(APIResource):
 
     @classmethod
     def from_dict(cls, dictionary):
+
+        if 'definitions' not in dictionary.keys():
+            return cls.from_dict_for_lists(dictionary)
+
         return cls(project_uuid=dictionary['project_uuid'],
                    project_name=dictionary['project_name'],
                    added=dictionary['added'],
                    definitions=_parse_definitions(dictionary['definitions']))
+
+    @classmethod
+    def new(cls):
+        endpoint = hypervector.API_BASE + "/" + cls.resource_name + "/new"
+        response = requests.post(endpoint, headers=cls.get_headers()).json()
+
+        return cls.from_dict(response)
 
 
 def _parse_definitions(definitions):
