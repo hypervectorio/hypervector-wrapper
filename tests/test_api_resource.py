@@ -13,10 +13,6 @@ def test_resources():
     assert isinstance(project.definitions[0], hypervector.Definition)
     assert isinstance(project.definitions[0].ensembles[0], hypervector.Ensemble)
 
-    new_project = hypervector.Project.new()
-
-    assert 1 == 1
-
 
 
 
