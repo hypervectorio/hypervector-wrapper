@@ -26,6 +26,15 @@ class Definition(APIResource):
         )
 
     @classmethod
+    def from_dict_for_lists(cls, dictionary):
+        return cls(
+            definition_uuid=dictionary['definition_uuid'],
+            definition_name=dictionary['definition_name'],
+            added=dictionary['added'],
+            ensembles=None
+        )
+
+    @classmethod
     def from_response(cls, dictionary):
         return cls(
             definition_uuid=dictionary['definition_uuid'],
