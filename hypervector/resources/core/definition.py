@@ -10,16 +10,19 @@ from hypervector.resources.abstract.api_resource import APIResource
 class Definition(APIResource):
     resource_name = 'definition'
 
-    def __init__(self, definition_uuid, definition_name, added):
+    def __init__(self, definition_uuid, definition_name, added, ensembles):
         self.definition_uuid = definition_uuid
         self.definition_name = definition_name
         self.added = added
+        self.ensembles = ensembles
 
     @classmethod
     def from_dict(cls, definition_uuid, dictionary):
         return cls(
             definition_uuid=definition_uuid,
-            definition_name=dictionary['definition_name']
+            definition_name=dictionary['definition_name'],
+            added=None,
+            ensembles=_parse_ensembles(dictionary['ensembles'])
         )
 
     @classmethod
@@ -27,7 +30,8 @@ class Definition(APIResource):
         return cls(
             definition_uuid=dictionary['definition_uuid'],
             definition_name=dictionary['definition_name'],
-            added=dictionary['added']
+            added=dictionary['added'],
+            ensembles=None
         )
 
     @classmethod
@@ -42,3 +46,10 @@ class Definition(APIResource):
 def _parse_definition_from_json_file(definition_json_file):
     return json.load(open(definition_json_file, 'rb'))
 
+
+def _parse_ensembles(ensembles):
+    parsed_ensembles = []
+    for ensemble_uuid, ensemble_meta in ensembles.items():
+        parsed_ensemble = Ensemble.from_dict(ensemble_uuid, ensemble_meta)
+        parsed_ensembles.append(parsed_ensemble)
+    return parsed_ensembles
