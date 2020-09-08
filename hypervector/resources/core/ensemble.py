@@ -17,4 +17,12 @@ class Ensemble(APIResource):
             benchmark_uuids=dictionary['benchmarks']
         )
 
+    @classmethod
+    def from_dict_for_lists(cls, dictionary):
+        return cls(
+            ensemble_uuid=dictionary['ensemble_uuid'],
+            N=dictionary['n'],
+            benchmark_uuids=None
+        )
+
 
