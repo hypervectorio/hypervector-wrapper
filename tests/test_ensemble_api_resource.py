@@ -17,3 +17,9 @@ def test_ensemble_new():
     )
 
     assert isinstance(ensemble, hypervector.Ensemble)
+
+
+def test_ensemble_get():
+    ensembles = hypervector.Ensemble.list()
+
+    assert 1 == 1

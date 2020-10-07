@@ -8,7 +8,7 @@ class Benchmark(APIResource):
         self.benchmark_uuid = benchmark_uuid
 
     @classmethod
-    def from_dict_for_lists(cls, dictionary):
+    def from_response(cls, dictionary):
         return cls(
             benchmark_uuid=dictionary['benchmark_uuid']
         )

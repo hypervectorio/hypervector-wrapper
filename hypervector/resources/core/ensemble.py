@@ -37,10 +37,29 @@ class Ensemble(APIResource):
         )
 
     @classmethod
+    def from_response_get(cls, dictionary):
+        # Return hypervectors on get
+        ensemble_result = EnsembleResult(
+            ensemble_uuid=dictionary['ensemble_uuid'],
+            hypervectors=dictionary['hypervectors']
+        )
+
+        return ensemble_result
+
+    @classmethod
     def new(cls, definition_uuid, N):
         endpoint = f"{hypervector.API_BASE}/{cls.resource_name}"
         data = {"definition_uuid": definition_uuid, "N": N}
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_response(response)
+
+
+class EnsembleResult:
+
+    def __init__(self, ensemble_uuid, hypervectors):
+        self.ensemble_uuid = ensemble_uuid
+        self.hypervectors = hypervectors
+
+
 
 

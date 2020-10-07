@@ -20,7 +20,7 @@ class Project(APIResource):
                    project_name=dictionary['project_name'])
 
     @classmethod
-    def from_dict(cls, dictionary):
+    def from_response(cls, dictionary):
 
         if 'definitions' not in dictionary.keys():
             return cls.from_dict_for_lists(dictionary)
@@ -31,11 +31,15 @@ class Project(APIResource):
                    definitions=_parse_definitions(dictionary['definitions']))
 
     @classmethod
+    def from_response_get(cls, dictionary):
+        return cls.from_response(dictionary)
+
+    @classmethod
     def new(cls):
         endpoint = hypervector.API_BASE + "/" + cls.resource_name + "/new"
         response = requests.post(endpoint, headers=cls.get_headers()).json()
 
-        return cls.from_dict(response)
+        return cls.from_response(response)
 
 
 def _parse_definitions(definitions):
