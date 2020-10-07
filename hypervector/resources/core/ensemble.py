@@ -1,3 +1,6 @@
+import requests
+
+import hypervector
 from hypervector.resources.abstract.api_resource import APIResource
 
 
@@ -24,5 +27,20 @@ class Ensemble(APIResource):
             N=dictionary['n'],
             benchmark_uuids=None
         )
+
+    @classmethod
+    def from_response(cls, dictionary):
+        return cls(
+            ensemble_uuid=dictionary['ensemble_uuid'],
+            N=dictionary['n'],
+            benchmark_uuids=None
+        )
+
+    @classmethod
+    def new(cls, definition_uuid, N):
+        endpoint = f"{hypervector.API_BASE}/{cls.resource_name}"
+        data = {"definition_uuid": definition_uuid, "N": N}
+        response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
+        return cls.from_response(response)
 
 
