@@ -21,14 +21,6 @@ class Ensemble(APIResource):
         )
 
     @classmethod
-    def from_dict_for_lists(cls, dictionary):
-        return cls(
-            ensemble_uuid=dictionary['ensemble_uuid'],
-            N=dictionary['n'],
-            benchmark_uuids=None
-        )
-
-    @classmethod
     def from_response(cls, dictionary):
         return cls(
             ensemble_uuid=dictionary['ensemble_uuid'],

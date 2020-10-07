@@ -15,15 +15,11 @@ class Project(APIResource):
         self.definitions = definitions
 
     @classmethod
-    def from_dict_for_lists(cls, dictionary):
-        return cls(project_uuid=dictionary['project_uuid'],
-                   project_name=dictionary['project_name'])
-
-    @classmethod
     def from_response(cls, dictionary):
 
         if 'definitions' not in dictionary.keys():
-            return cls.from_dict_for_lists(dictionary)
+            return cls(project_uuid=dictionary['project_uuid'],
+                       project_name=dictionary['project_name'])
 
         return cls(project_uuid=dictionary['project_uuid'],
                    project_name=dictionary['project_name'],
