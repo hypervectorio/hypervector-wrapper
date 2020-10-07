@@ -22,4 +22,5 @@ def test_ensemble_new():
 def test_ensemble_get():
     ensembles = hypervector.Ensemble.list()
 
-    assert 1 == 1
+    for ensemble in ensembles:
+        assert len(hypervector.Ensemble.get(ensemble.ensemble_uuid).hypervectors) == ensemble.N
