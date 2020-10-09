@@ -8,17 +8,17 @@ from hypervector.resources.core.benchmark import Benchmark
 class Ensemble(APIResource):
     resource_name = 'ensemble'
 
-    def __init__(self, ensemble_uuid, N, benchmark_uuids):
+    def __init__(self, ensemble_uuid, N, benchmarks):
         self.ensemble_uuid = ensemble_uuid
         self.N = N
-        self.benchmark_uuids = benchmark_uuids
+        self.benchmarks = benchmarks
 
     @classmethod
     def from_dict(cls, ensemble_uuid, dictionary):
         return cls(
             ensemble_uuid=ensemble_uuid,
             N=dictionary['N'],
-            benchmark_uuids=_parse_benchmarks(dictionary['benchmarks'])
+            benchmarks=_parse_benchmarks(dictionary['benchmarks'])
         )
 
     @classmethod
@@ -26,7 +26,7 @@ class Ensemble(APIResource):
         return cls(
             ensemble_uuid=dictionary['ensemble_uuid'],
             N=dictionary['n'],
-            benchmark_uuids=None
+            benchmarks=None
         )
 
     @classmethod
