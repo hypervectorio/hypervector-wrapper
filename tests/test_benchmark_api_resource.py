@@ -15,7 +15,7 @@ def test_benchmark_get():
     benchmarks = hypervector.Benchmark.list()
 
     for benchmark in benchmarks:
-        assert isinstance(hypervector.Benchmark.get(benchmark.benchmark_uuid), hypervector.Benchmark)
+        assert isinstance(benchmark, hypervector.Benchmark)
 
 
 def test_benchmark_new():

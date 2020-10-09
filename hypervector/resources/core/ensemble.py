@@ -2,6 +2,7 @@ import requests
 
 import hypervector
 from hypervector.resources.abstract.api_resource import APIResource
+from hypervector.resources.core.benchmark import Benchmark
 
 
 class Ensemble(APIResource):
@@ -17,7 +18,7 @@ class Ensemble(APIResource):
         return cls(
             ensemble_uuid=ensemble_uuid,
             N=dictionary['N'],
-            benchmark_uuids=dictionary['benchmarks']
+            benchmark_uuids=_parse_benchmarks(dictionary['benchmarks'])
         )
 
     @classmethod
@@ -51,6 +52,14 @@ class EnsembleResult:
     def __init__(self, ensemble_uuid, hypervectors):
         self.ensemble_uuid = ensemble_uuid
         self.hypervectors = hypervectors
+
+
+def _parse_benchmarks(benchmarks):
+    parsed_benchmarks = []
+    for benchmark_uuid in benchmarks:
+        parsed_benchmark = Benchmark(benchmark_uuid=benchmark_uuid)
+        parsed_benchmarks.append(parsed_benchmark)
+    return parsed_benchmarks
 
 
 
