@@ -24,7 +24,7 @@ class Benchmark(APIResource):
         return cls.from_response(response)
 
     def compare(self, output):
-        endpoint = f"{hypervector.API_BASE}/{self.resource_name}"
+        endpoint = f"{hypervector.API_BASE}/{self.resource_name}/assert"
         data = {'benchmark_uuid': self.benchmark_uuid, "output_hash": hash(tuple(output))}
-        response = requests.get(endpoint, json=data, headers=self.get_headers()).json()
+        response = requests.post(endpoint, json=data, headers=self.get_headers()).json()
         return response
