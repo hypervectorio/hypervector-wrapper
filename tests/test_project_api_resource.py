@@ -9,7 +9,7 @@ def test_project_list():
         assert isinstance(project, hypervector.Project)
 
 
-def test_project_creation():
+def test_project_new():
     new_project = hypervector.Project.new()
 
     assert isinstance(new_project, hypervector.Project)

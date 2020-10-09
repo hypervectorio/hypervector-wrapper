@@ -11,7 +11,7 @@ def test_benchmark_list():
         assert isinstance(benchmark, hypervector.Benchmark)
 
 
-def test_benchmark_create():
+def test_benchmark_new():
 
     n_hypervectors = 10000
 
