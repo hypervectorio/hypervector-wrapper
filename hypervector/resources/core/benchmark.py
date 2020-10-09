@@ -17,6 +17,10 @@ class Benchmark(APIResource):
         )
 
     @classmethod
+    def from_response_get(cls, dictionary):
+        return cls.from_response(dictionary)
+
+    @classmethod
     def new(cls, ensemble_uuid, output):
         endpoint = f"{hypervector.API_BASE}/{cls.resource_name}"
         data = {'ensemble_uuid': ensemble_uuid, "output_hash": hash(tuple(output))}
