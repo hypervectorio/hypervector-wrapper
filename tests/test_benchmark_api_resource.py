@@ -46,6 +46,7 @@ def test_benchmark_assert():
     )
 
     benchmark_results = [random() for _ in range(n_hypervectors)]
+    failing_results = [random() for _ in range(n_hypervectors)]
 
     benchmark = hypervector.Benchmark.new(
         new_ensemble.ensemble_uuid,
@@ -53,4 +54,6 @@ def test_benchmark_assert():
     )
 
     assert benchmark.compare(benchmark_results) == {'result': 'PASSED'}
+    assert benchmark.compare(failing_results) == {'result': 'FAILED'}
+    
 
