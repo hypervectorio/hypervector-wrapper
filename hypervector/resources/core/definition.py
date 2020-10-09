@@ -35,6 +35,10 @@ class Definition(APIResource):
         )
 
     @classmethod
+    def from_response_get(cls, dictionary):
+        return cls.from_response(dictionary)
+
+    @classmethod
     def new(cls, definition_file, project_uuid=None):
         endpoint = f"{hypervector.API_BASE}/{cls.resource_name}"
         data = _parse_definition_from_json_file(definition_file)
