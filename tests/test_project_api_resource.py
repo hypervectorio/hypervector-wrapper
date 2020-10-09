@@ -2,6 +2,13 @@ import hypervector
 from tests.util import get_resource_path
 
 
+def test_project_list():
+    projects = hypervector.Project.list()
+
+    for project in projects:
+        assert isinstance(project, hypervector.Project)
+
+
 def test_project_creation():
     new_project = hypervector.Project.new()
 

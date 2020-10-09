@@ -2,9 +2,11 @@ import hypervector
 from tests.util import get_resource_path
 
 
-def test_ensemble():
+def test_ensemble_list():
     ensembles = hypervector.Ensemble.list()
-    assert isinstance(ensembles[0], hypervector.Ensemble)
+
+    for ensemble in ensembles:
+        assert isinstance(ensemble, hypervector.Ensemble)
 
 
 def test_ensemble_new():

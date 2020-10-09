@@ -4,9 +4,11 @@ import hypervector
 from tests.util import get_resource_path
 
 
-def test_benchmark():
+def test_benchmark_list():
     benchmarks = hypervector.Benchmark.list()
-    assert isinstance(benchmarks[0], hypervector.Benchmark)
+
+    for benchmark in benchmarks:
+        assert isinstance(benchmark, hypervector.Benchmark)
 
 
 def test_benchmark_create():

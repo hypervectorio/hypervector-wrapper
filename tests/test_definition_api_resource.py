@@ -1,6 +1,8 @@
 import hypervector
 
 
-def test_definition():
+def test_definition_list():
     definitions = hypervector.Definition.list()
-    assert isinstance(definitions[0], hypervector.Definition)
+
+    for definition in definitions:
+        assert isinstance(definition, hypervector.Definition)
