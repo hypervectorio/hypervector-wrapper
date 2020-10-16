@@ -7,8 +7,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "1E-2",
-        "standard_deviation": "1"
+        "mu": "1E-2",
+        "sigma": "1"
       }
     },
     {
@@ -16,8 +16,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "30",
-        "standard_deviation": "1"
+        "mu": "30",
+        "sigma": "1"
       }
     },
     {
@@ -25,8 +25,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
     {
@@ -34,8 +34,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "0.1",
-        "standard_deviation": "1"
+        "mu": "0.1",
+        "sigma": "1"
       }
     },
     {
@@ -43,8 +43,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
     {
@@ -52,8 +52,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
      {
@@ -61,8 +61,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
      {
@@ -70,8 +70,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
      {
@@ -79,8 +79,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
      {
@@ -88,8 +88,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
      {
@@ -97,8 +97,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     },
      {
@@ -106,8 +106,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "1E3",
-        "standard_deviation": "1"
+        "mu": "1E3",
+        "sigma": "1"
       }
     },
      {
@@ -115,8 +115,8 @@
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mean": "10",
-        "standard_deviation": "1"
+        "mu": "10",
+        "sigma": "1"
       }
     }
   ]
