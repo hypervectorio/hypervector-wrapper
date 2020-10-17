@@ -1,3 +1,3 @@
 import hypervector
 
-hypervector.API_KEY = "wrappertestkey"
+hypervector.API_KEY = "testkey"
