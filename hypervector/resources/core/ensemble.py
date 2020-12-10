@@ -34,14 +34,15 @@ class Ensemble(APIResource):
         # Return hypervectors on get
         ensemble_result = EnsembleResult(
             ensemble_uuid=dictionary['ensemble_uuid'],
-            hypervectors=dictionary['hypervectors']
+            hypervectors=dictionary['hypervectors'],
+            benchmarks=dictionary['benchmarks']
         )
 
         return ensemble_result
 
     @classmethod
     def new(cls, definition_uuid, N):
-        endpoint = f"{hypervector.API_BASE}/{cls.resource_name}"
+        endpoint = f"{hypervector.API_BASE}/{cls.resource_name}/add"
         data = {"definition_uuid": definition_uuid, "N": N}
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_response(response)
@@ -49,9 +50,10 @@ class Ensemble(APIResource):
 
 class EnsembleResult:
 
-    def __init__(self, ensemble_uuid, hypervectors):
+    def __init__(self, ensemble_uuid, hypervectors, benchmarks):
         self.ensemble_uuid = ensemble_uuid
         self.hypervectors = hypervectors
+        self.benchmarks = _parse_benchmarks(benchmarks)
 
 
 def _parse_benchmarks(benchmarks):

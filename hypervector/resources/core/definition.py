@@ -40,7 +40,7 @@ class Definition(APIResource):
 
     @classmethod
     def new(cls, definition_file, project_uuid=None):
-        endpoint = f"{hypervector.API_BASE}/{cls.resource_name}"
+        endpoint = f"{hypervector.API_BASE}/{cls.resource_name}/add"
         data = _parse_definition_from_json_file(definition_file)
         data['project_uuid'] = project_uuid
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
