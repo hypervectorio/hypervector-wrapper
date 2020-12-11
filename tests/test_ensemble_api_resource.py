@@ -22,8 +22,12 @@ def test_ensemble_new():
 
 
 def test_ensemble_get():
-    ensembles = hypervector.Ensemble.list()
+    ensemble_uuids = [ensemble.ensemble_uuid for ensemble in hypervector.Ensemble.list()]
 
-    for ensemble in ensembles:
-        hypervectors = hypervector.Ensemble.get(ensemble.ensemble_uuid).hypervectors
-        assert len(hypervectors) == ensemble.N
+    for ensemble_uuid in ensemble_uuids:
+        ensemble = hypervector.Ensemble.get(ensemble_uuid)
+        assert len(ensemble.hypervectors) == ensemble.N
+
+        if ensemble.benchmarks is not None:
+            for benchmark in ensemble.benchmarks:
+                assert isinstance(benchmark, hypervector.Benchmark)
