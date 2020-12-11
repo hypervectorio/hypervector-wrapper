@@ -12,9 +12,7 @@ class Benchmark(APIResource):
 
     @classmethod
     def from_response(cls, dictionary):
-        return cls(
-            benchmark_uuid=dictionary['benchmark_uuid']
-        )
+        return cls(benchmark_uuid=dictionary['benchmark_uuid'])
 
     @classmethod
     def from_response_get(cls, dictionary):
