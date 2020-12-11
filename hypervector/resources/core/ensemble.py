@@ -35,6 +35,7 @@ class Ensemble(APIResource):
         ensemble_result = EnsembleResult(
             ensemble_uuid=dictionary['ensemble_uuid'],
             hypervectors=dictionary['hypervectors'],
+            N=dictionary['N'],
             benchmarks=dictionary['benchmarks']
         )
 
@@ -50,16 +51,17 @@ class Ensemble(APIResource):
 
 class EnsembleResult:
 
-    def __init__(self, ensemble_uuid, hypervectors, benchmarks):
+    def __init__(self, ensemble_uuid, hypervectors, N, benchmarks):
         self.ensemble_uuid = ensemble_uuid
         self.hypervectors = hypervectors
+        self.N = N
         self.benchmarks = _parse_benchmarks(benchmarks)
 
 
 def _parse_benchmarks(benchmarks):
     parsed_benchmarks = []
-    for benchmark_uuid in benchmarks:
-        parsed_benchmark = Benchmark(benchmark_uuid=benchmark_uuid)
+    for benchmark in benchmarks:
+        parsed_benchmark = Benchmark(benchmark_uuid=benchmark['benchmark_uuid'])
         parsed_benchmarks.append(parsed_benchmark)
     return parsed_benchmarks
 
