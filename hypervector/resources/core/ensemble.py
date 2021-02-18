@@ -8,16 +8,16 @@ from hypervector.resources.core.benchmark import Benchmark
 class Ensemble(APIResource):
     resource_name = 'ensemble'
 
-    def __init__(self, ensemble_uuid, N, benchmarks):
+    def __init__(self, ensemble_uuid, size, benchmarks):
         self.ensemble_uuid = ensemble_uuid
-        self.N = N
+        self.size = size
         self.benchmarks = benchmarks
 
     @classmethod
     def from_dict(cls, ensemble_uuid, dictionary):
         return cls(
             ensemble_uuid=ensemble_uuid,
-            N=dictionary['N'],
+            size=dictionary['size'],
             benchmarks=_parse_benchmarks(dictionary['benchmarks'])
         )
 
@@ -25,7 +25,7 @@ class Ensemble(APIResource):
     def from_response(cls, dictionary):
         return cls(
             ensemble_uuid=dictionary['ensemble_uuid'],
-            N=dictionary['n'],
+            size=dictionary['size'],
             benchmarks=None
         )
 
@@ -35,26 +35,26 @@ class Ensemble(APIResource):
         ensemble_result = EnsembleResult(
             ensemble_uuid=dictionary['ensemble_uuid'],
             hypervectors=dictionary['hypervectors'],
-            N=dictionary['N'],
+            size=dictionary['size'],
             benchmarks=dictionary['benchmarks']
         )
 
         return ensemble_result
 
     @classmethod
-    def new(cls, definition_uuid, N):
+    def new(cls, definition_uuid, size):
         endpoint = f"{hypervector.API_BASE}/{cls.resource_name}/add"
-        data = {"definition_uuid": definition_uuid, "N": N}
+        data = {"definition_uuid": definition_uuid, "size": size}
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_response(response)
 
 
 class EnsembleResult:
 
-    def __init__(self, ensemble_uuid, hypervectors, N, benchmarks):
+    def __init__(self, ensemble_uuid, hypervectors, size, benchmarks):
         self.ensemble_uuid = ensemble_uuid
         self.hypervectors = hypervectors
-        self.N = N
+        self.size = size
         self.benchmarks = _parse_benchmarks(benchmarks)
 
 
