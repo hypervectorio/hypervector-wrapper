@@ -11,11 +11,13 @@ def test_ensemble_list():
 
 def test_ensemble_new():
     new_project = hypervector.Project.new()
-    new_definition = hypervector.Definition.new(project_uuid=new_project.project_uuid,
-                                                definition_file=get_resource_path("hyperdef.json"))
+    new_definition = hypervector.Definition.new(
+        project_uuid=new_project.project_uuid,
+        definition_file=get_resource_path("hyperdef.json")
+    )
     ensemble = hypervector.Ensemble.new(
         new_definition.definition_uuid,
-        10000
+        'MEDIUM'
     )
 
     assert isinstance(ensemble, hypervector.Ensemble)
@@ -26,7 +28,7 @@ def test_ensemble_get():
 
     for ensemble_uuid in ensemble_uuids:
         ensemble = hypervector.Ensemble.get(ensemble_uuid)
-        assert len(ensemble.hypervectors) == ensemble.N
+        assert len(ensemble.hypervectors) == ensemble.size
 
         if ensemble.benchmarks is not None:
             for benchmark in ensemble.benchmarks:
