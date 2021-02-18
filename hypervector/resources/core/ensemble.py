@@ -61,7 +61,10 @@ class EnsembleResult:
 def _parse_benchmarks(benchmarks):
     parsed_benchmarks = []
     for benchmark in benchmarks:
-        parsed_benchmark = Benchmark(benchmark_uuid=benchmark['benchmark_uuid'])
+        parsed_benchmark = Benchmark(
+            benchmark_uuid=benchmark['benchmark_uuid'],
+            ensemble_uuid=benchmark['ensemble_uuid']
+        )
         parsed_benchmarks.append(parsed_benchmark)
     return parsed_benchmarks
 
