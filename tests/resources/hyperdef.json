@@ -1,122 +1,33 @@
 {
-  "definition_name": "Hyperdef",
-  "N": 100000,
+  "definition_name": "Test definition",
   "features": [
     {
       "feature_name": "feature_1",
       "type": "float",
       "distribution": {
         "type": "gaussian",
-        "mu": "1E-2",
-        "sigma": "1"
+        "mu": 1E-2,
+        "sigma": 1.5
       }
     },
     {
       "feature_name": "feature_2",
-      "type": "float",
+      "type": "integer",
       "distribution": {
-        "type": "gaussian",
-        "mu": "30",
-        "sigma": "1"
+        "type": "uniform",
+        "min": 30,
+        "max": 99
       }
     },
     {
       "feature_name": "feature_3",
-      "type": "float",
+      "type": "string",
       "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-    {
-      "feature_name": "feature_4",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "0.1",
-        "sigma": "1"
-      }
-    },
-    {
-      "feature_name": "feature_5",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-    {
-      "feature_name": "feature_6",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_7",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_8",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_9",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_10",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_11",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_12",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "1E3",
-        "sigma": "1"
-      }
-    },
-     {
-      "feature_name": "feature_13",
-      "type": "float",
-      "distribution": {
-        "type": "gaussian",
-        "mu": "10",
-        "sigma": "1"
+        "type": "categorical",
+        "categories": [
+          {"value":  "True", "probability": 0.3},
+          {"value":  "False", "probability": 0.7}
+        ]
       }
     }
   ]
