@@ -18,32 +18,30 @@ def ensemble_for_test():
 
 
 def test_benchmark_list(ensemble_for_test):
-    benchmarks = hypervector.Benchmark.list(ensemble_for_test.ensemble_uuid)
+    benchmarks = hypervector.Benchmark.list(ensemble_for_test)
 
     for benchmark in benchmarks:
         assert isinstance(benchmark, hypervector.Benchmark)
 
 
 def test_benchmark_new(ensemble_for_test):
-
     benchmark_results = [random() for _ in range(ensemble_for_test.size)]
 
     benchmark = hypervector.Benchmark.new(
-        ensemble_uuid=ensemble_for_test.ensemble_uuid,
-        output=benchmark_results
+        ensemble=ensemble_for_test,
+        expected_output=benchmark_results
     )
 
     assert isinstance(benchmark, hypervector.Benchmark)
 
 
 def test_benchmark_assert(ensemble_for_test):
-
     benchmark_results = [random() for _ in range(ensemble_for_test.size)]
     failing_results = [random() for _ in range(ensemble_for_test.size)]
 
     benchmark = hypervector.Benchmark.new(
-        ensemble_uuid=ensemble_for_test.ensemble_uuid,
-        output=benchmark_results
+        ensemble=ensemble_for_test,
+        expected_output=benchmark_results
     )
 
     assert benchmark.assert_equal(benchmark_results)['asserted'] is True
