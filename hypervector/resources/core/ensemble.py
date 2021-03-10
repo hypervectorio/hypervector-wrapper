@@ -8,8 +8,9 @@ from hypervector.resources.core.benchmark import Benchmark
 class Ensemble(APIResource):
     resource_name = 'ensemble'
 
-    def __init__(self, ensemble_uuid, size, benchmarks):
+    def __init__(self, ensemble_uuid, definition_uuid, size, benchmarks):
         self.ensemble_uuid = ensemble_uuid
+        self.definition_uuid = definition_uuid
         self.size = size
         self.benchmarks = benchmarks
 
@@ -25,6 +26,7 @@ class Ensemble(APIResource):
     def from_response(cls, dictionary):
         return cls(
             ensemble_uuid=dictionary['ensemble_uuid'],
+            definition_uuid=dictionary['definition_uuid'],
             size=dictionary['size'],
             benchmarks=None
         )
@@ -42,9 +44,15 @@ class Ensemble(APIResource):
         return ensemble_result
 
     @classmethod
+    def list(cls, definition_uuid):
+        endpoint = f"{hypervector.API_BASE}/definition/{definition_uuid}/ensembles"
+        response = requests.get(endpoint, headers=cls.get_headers()).json()
+        return [cls.from_response(ensemble) for ensemble in response]
+
+    @classmethod
     def new(cls, definition_uuid, size):
-        endpoint = f"{hypervector.API_BASE}/{cls.resource_name}/add"
-        data = {"definition_uuid": definition_uuid, "size": size}
+        endpoint = f"{hypervector.API_BASE}/definition/{definition_uuid}/ensembles/add"
+        data = {"size": size}
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_response(response)
 

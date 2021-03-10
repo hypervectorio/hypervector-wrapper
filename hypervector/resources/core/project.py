@@ -40,8 +40,8 @@ class Project(APIResource):
 
 def _parse_definitions(definitions):
     parsed_definitions = []
-    for definition_uuid, definition_meta in definitions.items():
-        parsed_definition = Definition.from_dict(definition_uuid, definition_meta)
+    for definition in definitions:
+        parsed_definition = Definition.from_response(definition)
         parsed_definitions.append(parsed_definition)
     return parsed_definitions
 

@@ -17,7 +17,7 @@ class APIResource:
 
     @classmethod
     def list(cls):
-        endpoint = hypervector.API_BASE + "/" + cls.resource_name + "/list"
+        endpoint = hypervector.API_BASE + "/" + cls.resource_name + "s"
         response = requests.get(endpoint, headers=cls.get_headers())
         return [cls.from_response(obj) for obj in response.json()]
 

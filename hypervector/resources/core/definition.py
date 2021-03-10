@@ -17,15 +17,6 @@ class Definition(APIResource):
         self.ensembles = ensembles
 
     @classmethod
-    def from_dict(cls, definition_uuid, dictionary):
-        return cls(
-            definition_uuid=definition_uuid,
-            definition_name=dictionary['definition_name'],
-            added=None,
-            ensembles=_parse_ensembles(dictionary['ensembles'])
-        )
-
-    @classmethod
     def from_response(cls, dictionary):
         return cls(
             definition_uuid=dictionary['definition_uuid'],
@@ -41,8 +32,10 @@ class Definition(APIResource):
     @classmethod
     def new(cls, definition_file, project_uuid=None):
         endpoint = f"{hypervector.API_BASE}/{cls.resource_name}/add"
-        data = _parse_definition_from_json_file(definition_file)
-        data['project_uuid'] = project_uuid
+        data = {
+            "definition": _parse_definition_from_json_file(definition_file),
+            "project_uuid": project_uuid
+        }
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_response(response)
 
