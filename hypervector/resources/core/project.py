@@ -16,11 +16,6 @@ class Project(APIResource):
 
     @classmethod
     def from_response(cls, dictionary):
-
-        if 'definitions' not in dictionary.keys():
-            return cls(project_uuid=dictionary['project_uuid'],
-                       project_name=dictionary['project_name'])
-
         return cls(project_uuid=dictionary['project_uuid'],
                    project_name=dictionary['project_name'],
                    added=dictionary['added'],
@@ -29,6 +24,12 @@ class Project(APIResource):
     @classmethod
     def from_response_get(cls, dictionary):
         return cls.from_response(dictionary)
+
+    @classmethod
+    def list(cls):
+        endpoint = f"{hypervector.API_BASE}/projects"
+        response = requests.get(endpoint, headers=cls.get_headers()).json()
+        return [cls.from_response(project) for project in response]
 
     @classmethod
     def new(cls):

@@ -16,12 +16,6 @@ class APIResource:
         return cls.headers
 
     @classmethod
-    def list(cls):
-        endpoint = hypervector.API_BASE + "/" + cls.resource_name + "s"
-        response = requests.get(endpoint, headers=cls.get_headers())
-        return [cls.from_response(obj) for obj in response.json()]
-
-    @classmethod
     def get(cls, uuid):
         endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}'
         response = requests.get(endpoint, headers=cls.get_headers()).json()
