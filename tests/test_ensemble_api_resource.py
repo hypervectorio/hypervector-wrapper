@@ -3,8 +3,8 @@ from tests.util import get_resource_path
 
 
 def test_ensemble_list():
-    definition_uuid = hypervector.Definition.list()[0].definition_uuid
-    ensembles = hypervector.Ensemble.list(definition_uuid)
+    definition = hypervector.Definition.list()[0]
+    ensembles = hypervector.Ensemble.list(definition)
 
     for ensemble in ensembles:
         assert isinstance(ensemble, hypervector.Ensemble)
@@ -25,9 +25,9 @@ def test_ensemble_new():
 
 
 def test_ensemble_get():
-    definition_uuid = hypervector.Definition.list()[0].definition_uuid
+    definition = hypervector.Definition.list()[0]
     ensemble_uuids = [ensemble.ensemble_uuid
-                      for ensemble in hypervector.Ensemble.list(definition_uuid)]
+                      for ensemble in hypervector.Ensemble.list(definition)]
 
     for ensemble_uuid in ensemble_uuids:
         ensemble = hypervector.Ensemble.get(ensemble_uuid)
