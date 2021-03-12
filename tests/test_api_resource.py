@@ -29,10 +29,7 @@ def test_resources():
 
 def test_delete_resource(test_definition):
     hypervector.Definition.delete(test_definition.definition_uuid)
-
-    x = hypervector.Definition.get(test_definition.definition_uuid)
-
-    assert 1 == 1
+    assert hypervector.Definition.get(test_definition.definition_uuid) is None
 
 
 
