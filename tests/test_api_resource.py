@@ -1,7 +1,9 @@
+import uuid
+
 import pytest
 
 import hypervector
-from hypervector.errors import ResourceNotFoundError, APIKeyNotSetError
+from hypervector.errors import APIKeyNotSetError, HypervectorError
 from tests.util import get_resource_path
 
 
@@ -53,18 +55,27 @@ def test_get_resource(test_definition, test_ensemble, test_benchmark):
     assert benchmark.benchmark_uuid == test_benchmark.benchmark_uuid
 
 
+def test_get_resource_not_found():
+    with pytest.raises(HypervectorError) as error:
+        hypervector.Definition.get(str(uuid.uuid4()))
+        assert error.status_code == 404
+
+
 def test_delete_resource(test_definition, test_ensemble, test_benchmark):
     hypervector.Benchmark.delete(test_benchmark.benchmark_uuid)
-    with pytest.raises(ResourceNotFoundError):
+    with pytest.raises(HypervectorError) as error:
         hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
+        assert error.status_code == 404
 
     hypervector.Ensemble.delete(test_ensemble.ensemble_uuid)
-    with pytest.raises(ResourceNotFoundError):
+    with pytest.raises(HypervectorError) as error:
         hypervector.Ensemble.get(test_ensemble.ensemble_uuid)
+        assert error.status_code == 404
 
     hypervector.Definition.delete(test_definition.definition_uuid)
-    with pytest.raises(ResourceNotFoundError):
+    with pytest.raises(HypervectorError):
         hypervector.Definition.get(test_definition.definition_uuid)
+        assert error.status_code == 404
 
 
 

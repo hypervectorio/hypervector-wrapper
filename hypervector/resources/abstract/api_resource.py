@@ -1,6 +1,6 @@
 import requests
 import hypervector
-from hypervector.errors import ResourceNotFoundError, APIKeyNotSetError
+from hypervector.errors import APIKeyNotSetError, HypervectorError
 
 
 class APIResource:
@@ -23,7 +23,7 @@ class APIResource:
         if response.status_code == 200:
             return cls.from_get(response.json())
         else:
-            raise ResourceNotFoundError(response)
+            raise HypervectorError(response)
 
     @classmethod
     def request(cls, endpoint, method=requests.get):
