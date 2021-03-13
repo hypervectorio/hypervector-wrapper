@@ -1,5 +1,6 @@
 import pytest
 import hypervector
+from hypervector.errors import HypervectorError
 from tests.util import get_resource_path
 
 
@@ -47,14 +48,16 @@ def test_get_resource():
 
 def test_delete_resource(test_definition, test_ensemble, test_benchmark):
     hypervector.Benchmark.delete(test_benchmark.benchmark_uuid)
-    response = hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
-    assert hypervector.Benchmark.get(test_benchmark.benchmark_uuid).status_code == 404
+    with pytest.raises(HypervectorError):
+        hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
 
     hypervector.Ensemble.delete(test_ensemble.ensemble_uuid)
-    assert hypervector.Ensemble.get(test_ensemble.ensemble_uuid).status_code == 404
+    with pytest.raises(HypervectorError):
+        hypervector.Ensemble.get(test_ensemble.ensemble_uuid)
 
     hypervector.Definition.delete(test_definition.definition_uuid)
-    assert hypervector.Definition.get(test_definition.definition_uuid).status_code == 404
+    with pytest.raises(HypervectorError):
+        hypervector.Definition.get(test_definition.definition_uuid)
 
 
 

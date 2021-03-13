@@ -1,5 +1,6 @@
 import requests
 import hypervector
+from hypervector.errors import HypervectorError
 
 
 def get_api_key():
@@ -22,7 +23,7 @@ class APIResource:
         if response.status_code == 200:
             return cls.from_response_get(response.json())
         else:
-            return None
+            raise HypervectorError(response)
 
     @classmethod
     def delete(cls, uuid):
