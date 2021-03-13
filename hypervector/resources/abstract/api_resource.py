@@ -21,7 +21,7 @@ class APIResource:
         endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}'
         response = requests.get(endpoint, headers=cls.get_headers())
         if response.status_code == 200:
-            return cls.from_response_get(response.json())
+            return cls.from_get(response.json())
         else:
             raise ResourceNotFoundError(response)
 

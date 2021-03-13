@@ -26,7 +26,7 @@ class Definition(APIResource):
         )
 
     @classmethod
-    def from_response_get(cls, dictionary):
+    def from_get(cls, dictionary):
         return cls.from_response(dictionary)
 
     @classmethod

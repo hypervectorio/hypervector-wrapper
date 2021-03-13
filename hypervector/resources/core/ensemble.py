@@ -32,7 +32,7 @@ class Ensemble(APIResource):
         )
 
     @classmethod
-    def from_response_get(cls, dictionary):
+    def from_get(cls, dictionary):
         # Return hypervectors on get
         ensemble_result = EnsembleResult(
             ensemble_uuid=dictionary['ensemble_uuid'],
