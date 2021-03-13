@@ -1,6 +1,7 @@
 import pytest
+
 import hypervector
-from hypervector.errors import HypervectorError
+from hypervector.errors import ResourceNotFoundError, APIKeyNotSetError
 from tests.util import get_resource_path
 
 
@@ -32,6 +33,16 @@ def test_benchmark(test_ensemble):
     return benchmark
 
 
+def test_no_api_key(monkeypatch):
+    def mock_empty_api_key():
+        return None
+
+    monkeypatch.setattr(hypervector, 'API_KEY', mock_empty_api_key())
+
+    with pytest.raises(APIKeyNotSetError):
+        hypervector.Project.list()
+
+
 def test_get_resource():
     projects = hypervector.Project.list()
 
@@ -48,15 +59,15 @@ def test_get_resource():
 
 def test_delete_resource(test_definition, test_ensemble, test_benchmark):
     hypervector.Benchmark.delete(test_benchmark.benchmark_uuid)
-    with pytest.raises(HypervectorError):
+    with pytest.raises(ResourceNotFoundError):
         hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
 
     hypervector.Ensemble.delete(test_ensemble.ensemble_uuid)
-    with pytest.raises(HypervectorError):
+    with pytest.raises(ResourceNotFoundError):
         hypervector.Ensemble.get(test_ensemble.ensemble_uuid)
 
     hypervector.Definition.delete(test_definition.definition_uuid)
-    with pytest.raises(HypervectorError):
+    with pytest.raises(ResourceNotFoundError):
         hypervector.Definition.get(test_definition.definition_uuid)
 
 

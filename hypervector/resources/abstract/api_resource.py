@@ -1,11 +1,6 @@
 import requests
 import hypervector
-from hypervector.errors import HypervectorError
-
-
-def get_api_key():
-    from hypervector import API_KEY
-    return API_KEY
+from hypervector.errors import ResourceNotFoundError, APIKeyNotSetError
 
 
 class APIResource:
@@ -13,7 +8,12 @@ class APIResource:
 
     @classmethod
     def get_headers(cls):
-        cls.headers['x-api-key'] = get_api_key()
+        from hypervector import API_KEY
+
+        if not API_KEY:
+            raise APIKeyNotSetError
+
+        cls.headers['x-api-key'] = API_KEY
         return cls.headers
 
     @classmethod
@@ -23,7 +23,12 @@ class APIResource:
         if response.status_code == 200:
             return cls.from_response_get(response.json())
         else:
-            raise HypervectorError(response)
+            raise ResourceNotFoundError(response)
+
+    @classmethod
+    def request(cls, endpoint, method=requests.get):
+        response = method(url=endpoint, headers=cls.get_headers())
+        return response.json()
 
     @classmethod
     def delete(cls, uuid):

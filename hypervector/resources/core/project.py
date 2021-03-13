@@ -28,7 +28,7 @@ class Project(APIResource):
     @classmethod
     def list(cls):
         endpoint = f"{hypervector.API_BASE}/projects"
-        response = requests.get(endpoint, headers=cls.get_headers()).json()
+        response = cls.request(endpoint)
         return [cls.from_response(project) for project in response]
 
     @classmethod
