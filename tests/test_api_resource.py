@@ -43,18 +43,14 @@ def test_no_api_key(monkeypatch):
         hypervector.Project.list()
 
 
-def test_get_resource():
-    projects = hypervector.Project.list()
+def test_get_resource(test_definition, test_ensemble, test_benchmark):
+    definition = hypervector.Definition.get(test_definition.definition_uuid)
+    ensemble = hypervector.Ensemble.get(test_ensemble.ensemble_uuid)
+    benchmark = hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
 
-    assert len(projects) > 0
-
-    for project in projects:
-        assert isinstance(project, hypervector.Project)
-
-        if project.definitions:
-            for definition_meta in project.definitions:
-                definition = hypervector.Definition.get(definition_meta.definition_uuid)
-                assert isinstance(definition, hypervector.Definition)
+    assert definition.definition_uuid == test_definition.definition_uuid
+    assert ensemble.ensemble_uuid == test_ensemble.ensemble_uuid
+    assert benchmark.benchmark_uuid == test_benchmark.benchmark_uuid
 
 
 def test_delete_resource(test_definition, test_ensemble, test_benchmark):
