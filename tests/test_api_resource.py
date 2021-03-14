@@ -1,6 +1,6 @@
 import uuid
-
 import pytest
+import responses
 
 import hypervector
 from hypervector.errors import APIKeyNotSetError, HypervectorError
@@ -8,7 +8,7 @@ from tests.util import get_resource_path
 
 
 @pytest.fixture
-def test_definition():
+def definition():
     project = hypervector.Project.new()
     definition = hypervector.Definition.new(
         definition_file=get_resource_path("hyperdef.json"),
@@ -18,19 +18,19 @@ def test_definition():
 
 
 @pytest.fixture
-def test_ensemble(test_definition):
+def ensemble(definition):
     ensemble = hypervector.Ensemble.new(
-        definition_uuid=test_definition.definition_uuid,
+        definition_uuid=definition.definition_uuid,
         size=100
     )
     return ensemble
 
 
 @pytest.fixture
-def test_benchmark(test_ensemble):
+def benchmark(ensemble):
     benchmark = hypervector.Benchmark.new(
-        ensemble=test_ensemble,
-        expected_output=[1 for _ in range(test_ensemble.size)]
+        ensemble=ensemble,
+        expected_output=[1 for _ in range(ensemble.size)]
     )
     return benchmark
 
@@ -45,14 +45,17 @@ def test_no_api_key(monkeypatch):
         hypervector.Project.list()
 
 
-def test_get_resource(test_definition, test_ensemble, test_benchmark):
-    definition = hypervector.Definition.get(test_definition.definition_uuid)
-    ensemble = hypervector.Ensemble.get(test_ensemble.ensemble_uuid)
-    benchmark = hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
+@responses.activate
+def test_get_resource(definition, ensemble, benchmark):
+    responses.add(
+        responses.GET,
+        f'{hypervector.API_BASE}/definition/{definition.definition_uuid}',
+        json=definition.to_response()
+    )
 
-    assert definition.definition_uuid == test_definition.definition_uuid
-    assert ensemble.ensemble_uuid == test_ensemble.ensemble_uuid
-    assert benchmark.benchmark_uuid == test_benchmark.benchmark_uuid
+    retrieved_definition = hypervector.Definition.get(definition.definition_uuid)
+
+    assert retrieved_definition.definition_uuid == definition.definition_uuid
 
 
 def test_get_resource_not_found():
@@ -61,20 +64,20 @@ def test_get_resource_not_found():
         assert error.status_code == 404
 
 
-def test_delete_resource(test_definition, test_ensemble, test_benchmark):
-    hypervector.Benchmark.delete(test_benchmark.benchmark_uuid)
+def test_delete_resource(definition, ensemble, benchmark):
+    hypervector.Benchmark.delete(benchmark.benchmark_uuid)
     with pytest.raises(HypervectorError) as error:
-        hypervector.Benchmark.get(test_benchmark.benchmark_uuid)
+        hypervector.Benchmark.get(benchmark.benchmark_uuid)
         assert error.status_code == 404
 
-    hypervector.Ensemble.delete(test_ensemble.ensemble_uuid)
+    hypervector.Ensemble.delete(ensemble.ensemble_uuid)
     with pytest.raises(HypervectorError) as error:
-        hypervector.Ensemble.get(test_ensemble.ensemble_uuid)
+        hypervector.Ensemble.get(ensemble.ensemble_uuid)
         assert error.status_code == 404
 
-    hypervector.Definition.delete(test_definition.definition_uuid)
+    hypervector.Definition.delete(definition.definition_uuid)
     with pytest.raises(HypervectorError):
-        hypervector.Definition.get(test_definition.definition_uuid)
+        hypervector.Definition.get(definition.definition_uuid)
         assert error.status_code == 404
 
 
