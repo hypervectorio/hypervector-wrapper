@@ -25,6 +25,14 @@ class Definition(APIResource):
             ensembles=None
         )
 
+    def to_response(self):
+        return {
+            "definition_uuid": self.definition_uuid,
+            "definition_name": self.definition_name,
+            "added": self.added,
+            "ensembles": self.ensembles
+        }
+
     @classmethod
     def from_get(cls, dictionary):
         return cls.from_response(dictionary)
