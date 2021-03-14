@@ -33,6 +33,6 @@ class APIResource:
     @classmethod
     def delete(cls, uuid):
         endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}/delete'
-        response = requests.delete(endpoint, headers=cls.get_headers()).json()
+        response = requests.delete(endpoint, headers=cls.get_headers())
         return response
 
