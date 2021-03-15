@@ -76,6 +76,9 @@ class EnsembleResult:
 
 
 def _parse_benchmarks(benchmarks):
+    if not benchmarks:
+        return None
+
     parsed_benchmarks = []
     for benchmark in benchmarks:
         parsed_benchmark = Benchmark(
