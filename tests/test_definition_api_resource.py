@@ -1,16 +1,22 @@
-import pytest
+import responses
 import hypervector
 from tests.util import get_resource_path
 from hypervector.resources.core.definition import _parse_definition_from_json_file
 
 
-@pytest.fixture
-def test_project():
-    project = hypervector.Project.new()
-    return project
+def test_definition_list(mocked_resources, mocked_responses):
+    _, definition, _, _ = mocked_resources
 
+    mocked_responses.add(
+        responses.GET,
+        f'{hypervector.API_BASE}/definitions',
+        json=[
+            definition.to_response(),
+            definition.to_response(),
+            definition.to_response()
+        ]
+    )
 
-def test_definition_list():
     definitions = hypervector.Definition.list()
 
     for definition in definitions:
