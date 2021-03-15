@@ -1,7 +1,6 @@
 import responses
 
 import hypervector
-from tests.util import get_resource_path
 
 
 def test_project_list(mocked_resources, mocked_responses):
