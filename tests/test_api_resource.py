@@ -4,18 +4,6 @@ import responses
 
 import hypervector
 from hypervector.errors import APIKeyNotSetError, HypervectorError
-from tests import util
-
-
-@pytest.fixture
-def mocked_responses():
-    with responses.RequestsMock(assert_all_requests_are_fired=False) as rsps:
-        yield rsps
-
-
-@pytest.fixture
-def mocked_resources(mocked_responses):
-    return util.mocked_resources(mocked_responses)
 
 
 def test_no_api_key(monkeypatch):
@@ -29,7 +17,7 @@ def test_no_api_key(monkeypatch):
 
 
 def test_get_resource(mocked_resources):
-    definition, _, _ = mocked_resources
+    _, definition, _, _ = mocked_resources
 
     retrieved_definition = hypervector.Definition.get(definition.definition_uuid)
 
@@ -51,7 +39,7 @@ def test_get_resource_not_found(mocked_responses):
 
 
 def test_delete_resource(mocked_resources, mocked_responses):
-    definition, ensemble, benchmark = mocked_resources
+    _, definition, ensemble, benchmark = mocked_resources
 
     endpoints = [
         f'{hypervector.API_BASE}/definition/{definition.definition_uuid}',
