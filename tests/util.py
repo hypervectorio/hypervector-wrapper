@@ -1,7 +1,6 @@
 import uuid
 from pathlib import Path
 
-import pytest
 import responses
 
 import hypervector
@@ -13,6 +12,20 @@ def get_resource_path(filename):
 
 
 def mocked_resources(mocked_responses):
+    # project
+    mocked_responses.add(
+        responses.POST,
+        f'{hypervector.API_BASE}/project/new',
+        json={
+            "project_uuid": str(uuid.uuid4()),
+            "project_name": "Mocked project",
+            "added": "Mon, 1 Jan 1970 00:00:00 GMT",
+            "definitions": []  # empty
+        }
+    )
+
+    project = hypervector.Project.new()
+
     # definition
     mocked_responses.add(
         responses.POST,
@@ -20,7 +33,7 @@ def mocked_resources(mocked_responses):
         json={
             "definition_uuid": str(uuid.uuid4()),
             "definition_name": "Mocked definition",
-            "project_uuid": str(uuid.uuid4()),
+            "project_uuid": project.project_uuid,
             "added": "Mon, 1 Jan 1970 00:00:00 GMT"
         }
     )
@@ -86,5 +99,5 @@ def mocked_resources(mocked_responses):
         json=benchmark.to_response()
     )
 
-    return definition, ensemble, benchmark
+    return project, definition, ensemble, benchmark
 
