@@ -1,5 +1,6 @@
 import uuid
 from pathlib import Path
+from random import randint
 
 import responses
 
@@ -69,10 +70,14 @@ def mocked_resources(mocked_responses):
         size=ensemble_size
     )
 
+    # include hypervectors for GET response
+    ensemble_on_get = ensemble.to_response()
+    ensemble_on_get['hypervectors'] = [randint(1, 10) for _ in range(ensemble_size)]
+
     mocked_responses.add(
         responses.GET,
         f'{hypervector.API_BASE}/ensemble/{ensemble.ensemble_uuid}',
-        json=ensemble.to_response()
+        json=ensemble_on_get
     )
 
     # benchmark

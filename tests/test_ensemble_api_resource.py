@@ -1,38 +1,43 @@
+import responses
 import hypervector
-from tests.util import get_resource_path
+from hypervector.resources.core.ensemble import EnsembleResult
 
 
-def test_ensemble_list():
-    definition = hypervector.Definition.list()[0]
-    ensembles = hypervector.Ensemble.list(definition)
+def test_ensemble_list(mocked_resources, mocked_responses):
+    _, definition, ensemble, _ = mocked_resources
 
-    for ensemble in ensembles:
-        assert isinstance(ensemble, hypervector.Ensemble)
-
-
-def test_ensemble_new():
-    new_project = hypervector.Project.new()
-    new_definition = hypervector.Definition.new(
-        project_uuid=new_project.project_uuid,
-        definition_file=get_resource_path("hyperdef.json")
+    mocked_responses.add(
+        responses.GET,
+        f'{hypervector.API_BASE}/definition/{definition.definition_uuid}/ensembles',
+        json=[
+            ensemble.to_response(),
+            ensemble.to_response(),
+            ensemble.to_response()
+        ]
     )
+
+    retrieved_ensembles = hypervector.Ensemble.list(definition)
+
+    for retrieved_ensemble in retrieved_ensembles:
+        assert isinstance(retrieved_ensemble, hypervector.Ensemble)
+        assert retrieved_ensemble.ensemble_uuid == ensemble.ensemble_uuid
+        assert retrieved_ensemble.definition_uuid == definition.definition_uuid
+
+
+def test_ensemble_new(mocked_resources):
+    _, definition, _, _ = mocked_resources
+
     ensemble = hypervector.Ensemble.new(
-        new_definition.definition_uuid,
-        'MEDIUM'
+        definition_uuid=definition.definition_uuid,
+        size="MEDIUM"
     )
 
     assert isinstance(ensemble, hypervector.Ensemble)
 
 
-def test_ensemble_get():
-    definition = hypervector.Definition.list()[0]
-    ensemble_uuids = [ensemble.ensemble_uuid
-                      for ensemble in hypervector.Ensemble.list(definition)]
+def test_ensemble_get(mocked_resources):
+    _, _, ensemble, _ = mocked_resources
 
-    for ensemble_uuid in ensemble_uuids:
-        ensemble = hypervector.Ensemble.get(ensemble_uuid)
-        assert len(ensemble.hypervectors) == ensemble.size
+    retrieved_ensemble = hypervector.Ensemble.get(ensemble.ensemble_uuid)
 
-        if ensemble.benchmarks is not None:
-            for benchmark in ensemble.benchmarks:
-                assert isinstance(benchmark, hypervector.Benchmark)
+    assert isinstance(retrieved_ensemble, EnsembleResult)

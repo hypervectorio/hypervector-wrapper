@@ -31,5 +31,5 @@ def test_definition_new(mocked_resources):
         project_uuid=project.project_uuid
     )
 
-    assert definition.definition_name == "Mocked definition"
+    assert isinstance(definition, hypervector.Definition)
 
