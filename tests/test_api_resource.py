@@ -1,39 +1,21 @@
 import uuid
 import pytest
-import requests
 import responses
 
 import hypervector
 from hypervector.errors import APIKeyNotSetError, HypervectorError
-from tests.util import get_resource_path
+from tests import util
 
 
 @pytest.fixture
-def definition():
-    project = hypervector.Project.new()
-    definition = hypervector.Definition.new(
-        definition_file=get_resource_path("hyperdef.json"),
-        project_uuid=project.project_uuid
-    )
-    return definition
+def mocked_responses():
+    with responses.RequestsMock(assert_all_requests_are_fired=False) as rsps:
+        yield rsps
 
 
 @pytest.fixture
-def ensemble(definition):
-    ensemble = hypervector.Ensemble.new(
-        definition_uuid=definition.definition_uuid,
-        size=100
-    )
-    return ensemble
-
-
-@pytest.fixture
-def benchmark(ensemble):
-    benchmark = hypervector.Benchmark.new(
-        ensemble=ensemble,
-        expected_output=[1 for _ in range(ensemble.size)]
-    )
-    return benchmark
+def mocked_resources(mocked_responses):
+    return util.mocked_resources(mocked_responses)
 
 
 def test_no_api_key(monkeypatch):
@@ -46,24 +28,18 @@ def test_no_api_key(monkeypatch):
         hypervector.Project.list()
 
 
-@responses.activate
-def test_get_resource(definition, ensemble, benchmark):
-    responses.add(
-        responses.GET,
-        f'{hypervector.API_BASE}/definition/{definition.definition_uuid}',
-        json=definition.to_response()
-    )
+def test_get_resource(mocked_resources):
+    definition, _, _ = mocked_resources
 
     retrieved_definition = hypervector.Definition.get(definition.definition_uuid)
 
     assert retrieved_definition.definition_uuid == definition.definition_uuid
 
 
-@responses.activate
-def test_get_resource_not_found():
+def test_get_resource_not_found(mocked_responses):
     random_resource_uuid = str(uuid.uuid4())
 
-    responses.add(
+    mocked_responses.add(
         responses.GET,
         f'{hypervector.API_BASE}/definition/{random_resource_uuid}',
         status=404
@@ -74,8 +50,9 @@ def test_get_resource_not_found():
         assert error.status_code == 404
 
 
-@responses.activate
-def test_delete_resource(definition, ensemble, benchmark):
+def test_delete_resource(mocked_resources, mocked_responses):
+    definition, ensemble, benchmark = mocked_resources
+
     endpoints = [
         f'{hypervector.API_BASE}/definition/{definition.definition_uuid}',
         f'{hypervector.API_BASE}/ensemble/{ensemble.ensemble_uuid}',
@@ -83,8 +60,8 @@ def test_delete_resource(definition, ensemble, benchmark):
     ]
 
     for endpoint in endpoints:
-        responses.add(responses.DELETE, endpoint + "/delete", "", status=200)
-        responses.add(responses.GET, endpoint, status=404)
+        mocked_responses.add(responses.DELETE, endpoint + "/delete", "", status=200)
+        mocked_responses.replace(responses.GET, endpoint, status=404)
 
     hypervector.Benchmark.delete(benchmark.benchmark_uuid)
     with pytest.raises(HypervectorError) as error:
