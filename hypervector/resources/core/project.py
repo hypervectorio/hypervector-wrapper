@@ -21,6 +21,14 @@ class Project(APIResource):
                    added=dictionary['added'],
                    definitions=_parse_definitions(dictionary['definitions']))
 
+    def to_response(self):
+        return {
+            "project_uuid": self.project_uuid,
+            "project_name": self.project_name,
+            "added": self.added,
+            "definitions": self.definitions
+        }
+
     @classmethod
     def from_get(cls, dictionary):
         return cls.from_response(dictionary)
