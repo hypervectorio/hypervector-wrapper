@@ -31,6 +31,14 @@ class Ensemble(APIResource):
             benchmarks=None
         )
 
+    def to_response(self):
+        return {
+            "ensemble_uuid": self.ensemble_uuid,
+            "definition_uuid": self.definition_uuid,
+            "size": self.size,
+            "benchmarks": self.benchmarks
+        }
+
     @classmethod
     def from_get(cls, dictionary):
         # Return hypervectors on get

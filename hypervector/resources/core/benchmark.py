@@ -20,6 +20,13 @@ class Benchmark(APIResource):
             definition_uuid=dictionary['definition_uuid']
         )
 
+    def to_response(self):
+        return {
+            "benchmark_uuid": self.benchmark_uuid,
+            "ensemble_uuid": self.ensemble_uuid,
+            "definition_uuid": self.definition_uuid
+        }
+
     @classmethod
     def from_get(cls, dictionary):
         return cls.from_response(dictionary)
