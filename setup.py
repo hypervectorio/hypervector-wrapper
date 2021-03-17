@@ -19,7 +19,8 @@ setup(
     extras_require={
         "dev": [
             "pytest >= 3.7",
-            "responses ~= 0.12.1"
+            "responses ~= 0.12.1",
+            "twine ~=3.4.1"
         ]
     },
     classifiers=[
