@@ -1,5 +1,7 @@
 # hypervector-wrapper
 
+![example workflow](https://github.com/hypervectorio/hypervector-wrapper/actions/workflows/main.yml/badge.svg)
+
 Python wrapper to access the Hypervector API, providing easy deserialisation of Hypervector
 resources to Python objects for building your data-driven test suite.
 
