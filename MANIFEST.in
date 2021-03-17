@@ -1,0 +1,3 @@
+include *.txt
+recursive-include tests *.json
+recursive-include tests *.py
