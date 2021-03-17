@@ -15,3 +15,10 @@ pip install hypervector-wrapper
 ```
 
 Note: requires Python 3.6+
+
+You can install the development dependencies and run tests with:
+
+```python
+pip install -e ".[dev]"
+pytest
+```

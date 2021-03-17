@@ -13,6 +13,15 @@ setup(
     author_email="jason@hypervector.io",
     url="https://github.com/hypervectorio/hypervector-wrapper",
     packages=find_packages(exclude=["tests"]),
+    install_requires=[
+        "requests ~=2.24.0"
+    ],
+    extras_require={
+        "dev": [
+            "pytest >= 3.7",
+            "responses ~= 0.12.1"
+        ]
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6"
