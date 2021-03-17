@@ -1,4 +1,4 @@
-name: Continuous integration
+name: tox + pytest
 
 on:
   push:
