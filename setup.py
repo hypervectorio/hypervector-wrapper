@@ -20,7 +20,8 @@ setup(
         "dev": [
             "pytest >= 3.7",
             "responses ~= 0.12.1",
-            "twine ~=3.4.1"
+            "twine ~=3.4.1",
+            "tox ~= 3.23.0"
         ]
     },
     classifiers=[
