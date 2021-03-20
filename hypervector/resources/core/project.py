@@ -30,8 +30,8 @@ class Project(APIResource):
         }
 
     @classmethod
-    def from_get(cls, dictionary):
-        return cls.from_response(dictionary)
+    def from_get(cls, response):
+        return cls.from_response(response.json())
 
     @classmethod
     def list(cls):
