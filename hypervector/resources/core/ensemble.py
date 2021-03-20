@@ -1,3 +1,6 @@
+import gzip
+import json
+
 import requests
 
 import hypervector
@@ -40,8 +43,9 @@ class Ensemble(APIResource):
         }
 
     @classmethod
-    def from_get(cls, dictionary):
+    def from_get(cls, response):
         # Return hypervectors on get
+        dictionary = json.loads(gzip.decompress(response.content))
         ensemble_result = EnsembleResult(
             ensemble_uuid=dictionary['ensemble_uuid'],
             hypervectors=dictionary['hypervectors'],

@@ -1,3 +1,5 @@
+import gzip
+import json
 import uuid
 from pathlib import Path
 from random import randint
@@ -73,11 +75,12 @@ def mocked_resources(mocked_responses):
     # include hypervectors for GET response
     ensemble_on_get = ensemble.to_response()
     ensemble_on_get['hypervectors'] = [randint(1, 10) for _ in range(ensemble_size)]
+    compressed_ensemble_get = gzip.compress(json.dumps(ensemble_on_get).encode('utf-8'))
 
     mocked_responses.add(
         responses.GET,
         f'{hypervector.API_BASE}/ensemble/{ensemble.ensemble_uuid}',
-        json=ensemble_on_get
+        compressed_ensemble_get
     )
 
     # benchmark
