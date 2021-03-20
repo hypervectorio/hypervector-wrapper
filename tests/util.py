@@ -75,7 +75,7 @@ def mocked_resources(mocked_responses):
     # include hypervectors for GET response
     ensemble_on_get = ensemble.to_response()
     ensemble_on_get['hypervectors'] = [randint(1, 10) for _ in range(ensemble_size)]
-    compressed_ensemble_get = gzip.compress(json.dumps(ensemble_on_get).encode('utf-8'))
+    compressed_ensemble_get = json.dumps(ensemble_on_get).encode('utf-8')
 
     mocked_responses.add(
         responses.GET,
