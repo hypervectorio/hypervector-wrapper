@@ -63,7 +63,8 @@ def mocked_resources(mocked_responses):
             "ensemble_uuid": str(uuid.uuid4()),
             "definition_uuid": definition.definition_uuid,
             "added": "Mon, 1 Jan 1970 00:00:01 GMT",
-            "size": ensemble_size
+            "size": ensemble_size,
+            "benchmarks": []
         }
     )
 
@@ -72,14 +73,25 @@ def mocked_resources(mocked_responses):
         size=ensemble_size
     )
 
-    # include hypervectors for GET response
-    ensemble_on_get = ensemble.to_response()
-    ensemble_on_get['hypervectors'] = [randint(1, 10) for _ in range(ensemble_size)]
-    compressed_ensemble_get = json.dumps(ensemble_on_get).encode('utf-8')
-
     mocked_responses.add(
         responses.GET,
         f'{hypervector.API_BASE}/ensemble/{ensemble.ensemble_uuid}',
+        json={
+            "ensemble_name": "echo-stop-ide-eigen",
+            "ensemble_uuid": str(uuid.uuid4()),
+            "definition_uuid": definition.definition_uuid,
+            "added": "Mon, 1 Jan 1970 00:00:01 GMT",
+            "size": ensemble_size,
+            "benchmarks": []
+        }
+    )
+
+    ensemble_data = {'hypervectors': [randint(1, 10) for _ in range(ensemble_size)]}
+    compressed_ensemble_get = json.dumps(ensemble_data).encode('utf-8')
+
+    mocked_responses.add(
+        responses.GET,
+        f'{hypervector.API_BASE}/ensemble/{ensemble.ensemble_uuid}/data',
         compressed_ensemble_get
     )
 

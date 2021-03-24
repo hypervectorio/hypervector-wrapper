@@ -40,4 +40,4 @@ def test_ensemble_get(mocked_resources):
 
     retrieved_ensemble = hypervector.Ensemble.get(ensemble.ensemble_uuid)
 
-    assert isinstance(retrieved_ensemble, EnsembleResult)
+    assert isinstance(retrieved_ensemble, hypervector.Ensemble)
