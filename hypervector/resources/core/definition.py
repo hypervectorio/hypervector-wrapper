@@ -22,7 +22,7 @@ class Definition(APIResource):
             definition_uuid=dictionary['definition_uuid'],
             definition_name=dictionary['definition_name'],
             added=dictionary['added'],
-            ensembles=None
+            ensembles=_parse_ensembles(dictionary['ensembles'])
         )
 
     def to_response(self):
@@ -60,7 +60,7 @@ def _parse_definition_from_json_file(definition_json_file):
 
 def _parse_ensembles(ensembles):
     parsed_ensembles = []
-    for ensemble_uuid, ensemble_meta in ensembles.items():
-        parsed_ensemble = Ensemble.from_dict(ensemble_uuid, ensemble_meta)
+    for ensemble in ensembles:
+        parsed_ensemble = Ensemble.from_response(ensemble)
         parsed_ensembles.append(parsed_ensemble)
     return parsed_ensembles
