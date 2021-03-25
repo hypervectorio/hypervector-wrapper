@@ -46,6 +46,10 @@ class Ensemble(APIResource):
     def from_get(cls, response):
         return cls.from_response(response.json())
 
+    def refresh(self):
+        ensemble = self.get(self.ensemble_uuid)
+        self.__dict__.update(ensemble.__dict__)
+
     @classmethod
     def list(cls, definition):
         parent_endpoint = f"{hypervector.API_BASE}/definition/{definition.definition_uuid}"

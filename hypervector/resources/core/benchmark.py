@@ -31,6 +31,10 @@ class Benchmark(APIResource):
     def from_get(cls, response):
         return cls.from_response(response.json())
 
+    def refresh(self):
+        benchmark = self.get(self.benchmark_uuid)
+        self.__dict__.update(benchmark.__dict__)
+
     @classmethod
     def list(cls, ensemble):
         parent_endpoint = f"{hypervector.API_BASE}/definition/{ensemble.definition_uuid}" \

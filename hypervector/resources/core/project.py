@@ -33,6 +33,10 @@ class Project(APIResource):
     def from_get(cls, response):
         return cls.from_response(response.json())
 
+    def refresh(self):
+        project = self.get(self.project_uuid)
+        self.__dict__.update(project.__dict__)
+
     @classmethod
     def list(cls):
         endpoint = f"{hypervector.API_BASE}/projects"
