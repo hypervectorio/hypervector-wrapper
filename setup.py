@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='hypervector-wrapper',
-    version='0.0.6',
+    version='0.0.7',
     description='Python wrapper to use the Hypervector API',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -14,7 +14,7 @@ setup(
     url="https://github.com/hypervectorio/hypervector-wrapper",
     packages=find_packages(exclude=["tests"]),
     install_requires=[
-        "requests ~=2.24.0"
+        "requests ~=2.25.0"
     ],
     extras_require={
         "dev": [
