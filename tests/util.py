@@ -37,7 +37,8 @@ def mocked_resources(mocked_responses):
             "definition_uuid": str(uuid.uuid4()),
             "definition_name": "Mocked definition",
             "project_uuid": project.project_uuid,
-            "added": "Mon, 1 Jan 1970 00:00:00 GMT"
+            "added": "Mon, 1 Jan 1970 00:00:00 GMT",
+            "ensembles": []
         }
     )
 

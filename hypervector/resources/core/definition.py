@@ -37,6 +37,10 @@ class Definition(APIResource):
     def from_get(cls, response):
         return cls.from_response(response.json())
 
+    def refresh(self):
+        definition = self.get(self.definition_uuid)
+        self.__dict__.update(definition.__dict__)
+
     @classmethod
     def list(cls):
         endpoint = f"{hypervector.API_BASE}/definitions"
@@ -59,6 +63,9 @@ def _parse_definition_from_json_file(definition_json_file):
 
 
 def _parse_ensembles(ensembles):
+    if not ensembles or len(ensembles) == 0:
+        return None
+
     parsed_ensembles = []
     for ensemble in ensembles:
         parsed_ensemble = Ensemble.from_response(ensemble)
