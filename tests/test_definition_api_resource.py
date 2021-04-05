@@ -1,5 +1,8 @@
+import uuid
+
 import responses
 import hypervector
+from hypervector.resources.auxilliary.revision import Revision
 from tests.util import get_resource_path
 
 
@@ -32,4 +35,25 @@ def test_definition_new(mocked_resources):
     )
 
     assert isinstance(definition, hypervector.Definition)
+
+
+def test_definition_history(mocked_resources, mocked_responses):
+    _, definition, _, _ = mocked_resources
+
+    mocked_revision = Revision(
+        revision_uuid=str(uuid.uuid4()),
+        added="01/01/1970 00:00:01",
+        features=[]
+    )
+
+    mocked_responses.add(
+        responses.GET,
+        f'{hypervector.API_BASE}/definition/{definition.definition_uuid}/history',
+        json=[mocked_revision.to_response()]
+    )
+
+    history = definition.history()
+
+    for revision in history:
+        assert isinstance(revision, Revision)
 
