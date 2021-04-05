@@ -3,6 +3,7 @@ import json
 import requests
 
 import hypervector
+from hypervector.resources.auxilliary.revision import Revision
 from hypervector.resources.core.ensemble import Ensemble
 from hypervector.resources.abstract.api_resource import APIResource
 
@@ -56,6 +57,12 @@ class Definition(APIResource):
         }
         response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
         return cls.from_response(response)
+
+    def history(self):
+        endpoint = f"{hypervector.API_BASE}/definition/{self.definition_uuid}/history"
+        response = requests.get(endpoint, headers=self.get_headers()).json()
+        history = [Revision.from_response(response_item) for response_item in response]
+        return history
 
 
 def _parse_definition_from_json_file(definition_json_file):
