@@ -37,6 +37,29 @@ def test_definition_new(mocked_resources):
     assert isinstance(definition, hypervector.Definition)
 
 
+def test_definition_ensembles(mocked_resources, mocked_responses):
+    _, definition, ensemble, _ = mocked_resources
+
+    definition_response = definition.to_response()
+    definition_response['ensembles'] = [
+        ensemble.to_response(),
+        ensemble.to_response(),
+        ensemble.to_response()
+    ]
+
+    mocked_responses.replace(
+        responses.GET,
+        f'{hypervector.API_BASE}/definition/{definition.definition_uuid}',
+        json=definition_response
+    )
+
+    definition = hypervector.Definition.get(definition.definition_uuid)
+
+    for ensemble_from_response in definition.ensembles:
+        assert isinstance(ensemble_from_response, hypervector.Ensemble)
+        assert len(ensemble_from_response.hypervectors()) == ensemble.size
+
+
 def test_definition_history(mocked_resources, mocked_responses):
     _, definition, _, _ = mocked_resources
 
