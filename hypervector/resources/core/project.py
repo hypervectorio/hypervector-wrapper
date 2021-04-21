@@ -47,7 +47,6 @@ class Project(APIResource):
     def new(cls):
         endpoint = hypervector.API_BASE + "/" + cls.resource_name + "/new"
         response = requests.post(endpoint, headers=cls.get_headers()).json()
-
         return cls.from_response(response)
 
 

@@ -40,8 +40,8 @@ class Benchmark(APIResource):
         parent_endpoint = f"{hypervector.API_BASE}/definition/{ensemble.definition_uuid}" \
                           f"/ensemble/{ensemble.ensemble_uuid}"
         endpoint = f"{parent_endpoint}/benchmarks"
-        response = requests.get(endpoint, headers=cls.get_headers())
-        return [cls.from_response(obj) for obj in response.json()]
+        response = cls.request(endpoint)
+        return [cls.from_response(obj) for obj in response]
 
     @classmethod
     def new(cls, ensemble, expected_output):

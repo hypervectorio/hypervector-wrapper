@@ -45,7 +45,7 @@ class Definition(APIResource):
     @classmethod
     def list(cls):
         endpoint = f"{hypervector.API_BASE}/definitions"
-        response = requests.get(endpoint, headers=cls.get_headers()).json()
+        response = cls.request(endpoint)
         return [cls.from_response(definition) for definition in response]
 
     @classmethod

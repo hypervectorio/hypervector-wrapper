@@ -28,7 +28,10 @@ class APIResource:
     @classmethod
     def request(cls, endpoint, method=requests.get):
         response = method(url=endpoint, headers=cls.get_headers())
-        return response.json()
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise HypervectorError(response)
 
     @classmethod
     def delete(cls, uuid):

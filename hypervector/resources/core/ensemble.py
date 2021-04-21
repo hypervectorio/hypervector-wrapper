@@ -54,7 +54,7 @@ class Ensemble(APIResource):
     def list(cls, definition):
         parent_endpoint = f"{hypervector.API_BASE}/definition/{definition.definition_uuid}"
         endpoint = f"{parent_endpoint}/ensembles"
-        response = requests.get(endpoint, headers=cls.get_headers()).json()
+        response = cls.request(endpoint)
         return [cls.from_response(ensemble) for ensemble in response]
 
     @classmethod
