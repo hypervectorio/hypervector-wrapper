@@ -20,7 +20,7 @@ class APIResource:
     def get(cls, uuid):
         endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}'
         response = requests.get(endpoint, headers=cls.get_headers())
-        if response.status_code == 200:
+        if response.ok:
             return cls.from_get(response)
         else:
             raise HypervectorError(response)
@@ -28,7 +28,7 @@ class APIResource:
     @classmethod
     def request(cls, endpoint, method=requests.get):
         response = method(url=endpoint, headers=cls.get_headers())
-        if response.status_code == 200:
+        if response.ok:
             return response.json()
         else:
             raise HypervectorError(response)
