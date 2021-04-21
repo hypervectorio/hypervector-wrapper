@@ -1,6 +1,6 @@
 import requests
 import hypervector
-from hypervector.errors import APIKeyNotSetError, HypervectorError
+from hypervector.errors import APIKeyNotSetError, HypervectorError, APIBaseError
 
 
 class APIResource:
@@ -19,15 +19,23 @@ class APIResource:
     @classmethod
     def get(cls, uuid):
         endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}'
-        response = requests.get(endpoint, headers=cls.get_headers())
+        try:
+            response = requests.get(endpoint, headers=cls.get_headers())
+        except requests.ConnectionError:
+            raise APIBaseError
+
         if response.ok:
             return cls.from_get(response)
         else:
-            raise HypervectorError(response)
+            raise HypervectorError
 
     @classmethod
     def request(cls, endpoint, method=requests.get):
-        response = method(url=endpoint, headers=cls.get_headers())
+        try:
+            response = method(url=endpoint, headers=cls.get_headers())
+        except requests.ConnectionError:
+            raise APIBaseError
+
         if response.ok:
             return response.json()
         else:
