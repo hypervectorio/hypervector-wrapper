@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='hypervector-wrapper',
-    version='0.0.11',
+    version='0.0.12',
     description='Python wrapper to use the Hypervector API. Better data tests',
     long_description=long_description,
     long_description_content_type="text/markdown",
