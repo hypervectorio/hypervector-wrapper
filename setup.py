@@ -15,7 +15,7 @@ setup(
     packages=find_packages(exclude=["tests"]),
     install_requires=[
         "requests ~=2.25.0",
-        "numpy ~=1.20.1"
+        "numpy >=1.19.5"
     ],
     extras_require={
         "dev": [
