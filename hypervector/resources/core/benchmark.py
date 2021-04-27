@@ -28,10 +28,6 @@ class Benchmark(APIResource):
             "definition_uuid": self.definition_uuid
         }
 
-    @classmethod
-    def from_get(cls, response):
-        return cls.from_response(response.json())
-
     def refresh(self):
         benchmark = self.get(self.benchmark_uuid)
         self.__dict__.update(benchmark.__dict__)
@@ -53,7 +49,7 @@ class Benchmark(APIResource):
             expected_output = expected_output.tolist()
 
         data = {"expected_output": expected_output}
-        response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
+        response = cls.request(endpoint, method=requests.post, json=data)
         return cls.from_response(response)
 
     def assert_equal(self, output_to_assert):

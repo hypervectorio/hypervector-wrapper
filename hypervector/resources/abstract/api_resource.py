@@ -1,6 +1,6 @@
 import requests
 import hypervector
-from hypervector.errors import APIKeyNotSetError, HypervectorError, APIBaseError
+from hypervector.errors import APIKeyNotSetError, HypervectorError, APIConnectionError
 
 
 class APIResource:
@@ -17,29 +17,25 @@ class APIResource:
         return cls.headers
 
     @classmethod
-    def get(cls, uuid):
-        endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}'
+    def request(cls, endpoint, method=requests.get, json=None):
         try:
-            response = requests.get(endpoint, headers=cls.get_headers())
+            response = method(url=endpoint, headers=cls.get_headers(), json=json)
         except requests.ConnectionError:
-            raise APIBaseError
-
-        if response.ok:
-            return cls.from_get(response)
-        else:
-            raise HypervectorError
-
-    @classmethod
-    def request(cls, endpoint, method=requests.get):
-        try:
-            response = method(url=endpoint, headers=cls.get_headers())
-        except requests.ConnectionError:
-            raise APIBaseError
+            raise APIConnectionError(
+                "There was a problem reaching the Hypervector API. Please "
+                "check your hypervector.API_BASE setting"
+            )
 
         if response.ok:
             return response.json()
         else:
             raise HypervectorError(response)
+
+    @classmethod
+    def get(cls, uuid):
+        endpoint = f'{hypervector.API_BASE}/{cls.resource_name}/{uuid}'
+        response = cls.request(endpoint)
+        return cls.from_response(response)
 
     @classmethod
     def delete(cls, uuid):

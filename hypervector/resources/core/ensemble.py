@@ -42,10 +42,6 @@ class Ensemble(APIResource):
             "benchmarks": self.benchmarks
         }
 
-    @classmethod
-    def from_get(cls, response):
-        return cls.from_response(response.json())
-
     def refresh(self):
         ensemble = self.get(self.ensemble_uuid)
         self.__dict__.update(ensemble.__dict__)

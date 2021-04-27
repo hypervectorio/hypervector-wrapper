@@ -34,10 +34,6 @@ class Definition(APIResource):
             "ensembles": self.ensembles
         }
 
-    @classmethod
-    def from_get(cls, response):
-        return cls.from_response(response.json())
-
     def refresh(self):
         definition = self.get(self.definition_uuid)
         self.__dict__.update(definition.__dict__)

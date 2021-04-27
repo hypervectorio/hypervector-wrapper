@@ -29,10 +29,6 @@ class Project(APIResource):
             "definitions": self.definitions
         }
 
-    @classmethod
-    def from_get(cls, response):
-        return cls.from_response(response.json())
-
     def refresh(self):
         project = self.get(self.project_uuid)
         self.__dict__.update(project.__dict__)
@@ -46,7 +42,7 @@ class Project(APIResource):
     @classmethod
     def new(cls):
         endpoint = hypervector.API_BASE + "/" + cls.resource_name + "/new"
-        response = requests.post(endpoint, headers=cls.get_headers()).json()
+        response = cls.request(endpoint, method=requests.post)
         return cls.from_response(response)
 
 
