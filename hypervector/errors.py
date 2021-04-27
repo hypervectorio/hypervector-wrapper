@@ -2,7 +2,7 @@ class APIKeyNotSetError(Exception):
     pass
 
 
-class APIBaseError(Exception):
+class APIConnectionError(Exception):
     pass
 
 
