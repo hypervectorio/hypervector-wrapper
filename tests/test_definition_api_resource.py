@@ -26,11 +26,36 @@ def test_definition_list(mocked_resources, mocked_responses):
         assert retrieved_definition.definition_uuid == definition.definition_uuid
 
 
-def test_definition_new(mocked_resources):
+def test_definition_new_from_dict(mocked_resources):
+    project, _, _, _ = mocked_resources
+
+    definition_dict = {
+        "definition_name": "Test definition",
+        "features": [
+            {
+                "type": "float",
+                "distribution": {
+                    "type": "gaussian",
+                    "mu": 1E-2,
+                    "sigma": 1.5
+                }
+            }
+        ]
+    }
+
+    definition = hypervector.Definition.new(
+        definition=definition_dict,
+        project_uuid=project.project_uuid
+    )
+
+    assert isinstance(definition, hypervector.Definition)
+
+
+def test_definition_new_from_file(mocked_resources):
     project, _, _, _ = mocked_resources
 
     definition = hypervector.Definition.new(
-        definition_file=get_resource_path("hyperdef.json"),
+        definition=get_resource_path("hyperdef.json"),
         project_uuid=project.project_uuid
     )
 

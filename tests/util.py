@@ -43,7 +43,7 @@ def mocked_resources(mocked_responses):
     )
 
     definition = hypervector.Definition.new(
-        definition_file=get_resource_path("hyperdef.json"),
+        definition=get_resource_path("hyperdef.json"),
         project_uuid=str(uuid.uuid4())
     )
 
