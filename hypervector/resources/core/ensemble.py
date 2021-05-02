@@ -57,12 +57,12 @@ class Ensemble(APIResource):
     def new(cls, definition_uuid, size):
         endpoint = f"{hypervector.API_BASE}/definition/{definition_uuid}/ensembles/add"
         data = {"size": size}
-        response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
+        response = cls.request(endpoint, method=requests.post, json=data)
         return cls.from_response(response)
 
     def hypervectors(self):
         endpoint = f"{hypervector.API_BASE}/ensemble/{self.ensemble_uuid}/data"
-        response = requests.get(endpoint, headers=self.get_headers()).json()
+        response = self.request(endpoint)
         return response['hypervectors']
 
 

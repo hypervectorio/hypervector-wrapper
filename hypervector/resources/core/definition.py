@@ -57,7 +57,8 @@ class Definition(APIResource):
             "definition": definition_json,
             "project_uuid": project_uuid
         }
-        response = requests.post(endpoint, json=data, headers=cls.get_headers()).json()
+
+        response = cls.request(endpoint, method=requests.post, json=data)
         return cls.from_response(response)
 
     def history(self):

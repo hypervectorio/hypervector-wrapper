@@ -59,5 +59,5 @@ class Benchmark(APIResource):
             output_to_assert = output_to_assert.tolist()
 
         data = {"output_to_assert": output_to_assert}
-        response = requests.post(endpoint, json=data, headers=self.get_headers()).json()
+        response = self.request(endpoint, method=requests.post, json=data)
         return response
