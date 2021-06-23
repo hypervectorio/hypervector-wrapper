@@ -1,9 +1,9 @@
 # hypervector-wrapper
 
-<img src="./hypie.png" width="100">
-
 ![workflow](https://github.com/hypervectorio/hypervector-wrapper/actions/workflows/main.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/hypervector-wrapper.svg)](https://pypi.python.org/pypi/hypervector-wrapper/)
+
+<img src="./hypie.png" width="200">
 
 Python wrapper to access the Hypervector API, providing easy deserialisation of Hypervector
 resources to Python objects for building your data-driven test suite.
