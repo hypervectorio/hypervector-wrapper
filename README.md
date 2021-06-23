@@ -1,5 +1,7 @@
 # hypervector-wrapper
 
+![hypie](./hypie.png)
+
 ![workflow](https://github.com/hypervectorio/hypervector-wrapper/actions/workflows/main.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/hypervector-wrapper.svg)](https://pypi.python.org/pypi/hypervector-wrapper/)
 
